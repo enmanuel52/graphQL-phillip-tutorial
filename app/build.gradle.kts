@@ -18,6 +18,13 @@ android {
     compileSdk = 33
 
     defaultConfig {
+        configurations.all {
+            resolutionStrategy {
+                force("androidx.emoji2:emoji2-views-helper:1.3.0")
+                force("androidx.emoji2:emoji2:1.3.0")
+            }
+        }
+
         applicationId = "com.enmanuelbergling.graphqllearning"
         minSdk = 26
         targetSdk = 33
