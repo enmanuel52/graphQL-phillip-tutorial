@@ -51,14 +51,14 @@ fun CountriesScreen(
 @Composable
 fun CountryItem(item: SimpleCountry, modifier: Modifier = Modifier) {
     Row(modifier, verticalAlignment = Alignment.CenterVertically) {
-        Text(text = item.emoji, style = MaterialTheme.typography.headlineMedium)
+        Text(text = item.emoji, style = MaterialTheme.typography.headlineLarge)
 
         Spacer(modifier = Modifier.width(16.dp))
 
         Column(Modifier.fillMaxWidth()) {
             Text(text = item.name, style = MaterialTheme.typography.titleMedium)
 
-            Spacer(modifier = Modifier.height(12.dp))
+            Spacer(modifier = Modifier.height(8.dp))
 
             Text(text = item.capital, style = MaterialTheme.typography.bodyMedium)
         }
