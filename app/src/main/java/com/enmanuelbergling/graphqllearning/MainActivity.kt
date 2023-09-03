@@ -31,10 +31,12 @@ class MainActivity : ComponentActivity() {
                 ) {
                     val viewModel = viewModel<CountriesVM>()
                     val state by viewModel.countriesState.collectAsState()
-                    
-                    CountriesScreen(state = state, onSelectCountry = viewModel::selectCountry) {
-                        
-                    }
+
+                    CountriesScreen(
+                        state = state,
+                        onSelectCountry = viewModel::selectCountry,
+                        onDismissDialog = viewModel::dismissCountryDialog
+                    )
                 }
             }
         }

@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CountriesVM @Inject constructor(
-    getCountriesUC: GetCountriesUC,
+    private val getCountriesUC: GetCountriesUC,
     private val getCountryByIdUC: GetCountryByIdUC,
 ) : ViewModel() {
 
@@ -22,20 +22,22 @@ class CountriesVM @Inject constructor(
     val countriesState get() = _countriesState.asStateFlow()
 
     init {
-        viewModelScope.launch {
-            _countriesState.update { it.copy(isLoading = true) }
-
-            _countriesState.update {
-                it.copy(isLoading = false, countries = getCountriesUC())
-            }
-        }
+        getAllCountries()
     }
 
     fun selectCountry(code: String) = viewModelScope.launch {
-        _countriesState.update { it.copy(selectedCountry = getCountryByIdUC(code)) }
+        _countriesState.update { it.copy(isLoading = true) }
+        val detailedCountry = getCountryByIdUC(code)
+        _countriesState.update { it.copy(selectedCountry = detailedCountry, isLoading = false) }
     }
 
     fun dismissCountryDialog() {
         _countriesState.update { it.copy(selectedCountry = null) }
+    }
+
+    private fun getAllCountries() = viewModelScope.launch {
+        _countriesState.update { it.copy(isLoading = true) }
+        val newData = getCountriesUC()
+        _countriesState.update { it.copy(isLoading = false, countries = newData) }
     }
 }
